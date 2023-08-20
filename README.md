@@ -1,17 +1,17 @@
 # LIP - Lua INI Parser
-*Lua INI Parser* is a tiny Lua library allowing to handle *.ini* files.
+*Lua INI Parser* is a tiny Lua library allowing to handle *.ini* format strings.
 
 # Usage
-Add [LIP.lua](https://github.com/Dynodzzo/Lua_INI_Parser/blob/master/LIP.lua) file into your project folder.<br />
+Add [LIP.lua](https://github.com/Riflio/Lua_INI_Parser/blob/master/LIP.lua) file into your project folder.<br />
 Call it using __require__ function.<br />
 It will return a table containing read & write functions.
 
 # Full overview
-* __LIP.load(fileName)__ : Returns a table containing all the values from the file.
-* __LIP.save(fileName, data)__ : Saves the data into the specified file.
+* __LIP.parse(iniStr)__ : Returns a table containing all the data from the INI format string.
+* __LIP.dump(data)__ :  Return all the data from a table to an INI formated string.
 
 # Examples
-Here's how to save some data :
+Here's how to print an INI format some data table:
 
 ```lua
 local LIP = require 'LIP';
@@ -32,10 +32,9 @@ local data =
 	},
 };
 
--- Data saving
-LIP.save('savedata.ini', data);
+print(LIP.dump(data))
 ````
-And the *.ini* file created :
+And the *.ini* file content:
 ```ini
 [sound]
 left=70
@@ -53,8 +52,19 @@ Now let's get all this data :
 ```lua
 local LIP = require 'LIP';
 
--- Data loading
-local data = LIP.load('savedata.ini');
+-- Data formating
+local contentString =[[
+[sound]
+left=70
+right=80
+
+[screen]
+width=960
+height=544
+caption=Window's caption
+focused=true
+]]
+local data = LIP.parse(contentString);
 
 print(data.sound.right); --> 80
 print(data.screen.caption); --> Window's caption
